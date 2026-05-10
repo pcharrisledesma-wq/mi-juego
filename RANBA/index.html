@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>La caña del saber - S.A. Damm Reto</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Signika:wght@400;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            margin: 0; 
+            padding: 0;
+        }
+
+        body {
+            background: url('Gemini_Generated_Image_22okro22okro22ok.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            font-family: 'Signika', sans-serif;
+            height: 100vh;
+            height: 100dvh; /* Para móviles, respeta la barra de navegación */
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        /* --- LAYOUT PRINCIPAL --- */
+        .layout-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            height: 100dvh;
+            width: 100vw;
+            background: rgba(0,0,0,0.3); 
+            transition: filter 1s ease;
+        }
+
+        /* 1. ZONA SUPERIOR: TÍTULOS */
+        .top-section {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0; 
+            z-index: 10;
+        }
+
+        .neon-sign {
+            font-family: 'Pacifico', cursive;
+            font-size: 3rem; 
+            color: #ff9900;
+            text-align: center;
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff9900, 0 0 40px #ff9900, 0 0 80px #ff9900;
+            animation: flicker 4s infinite alternate;
+            margin: 0;
+        }
+        
+        .subtitle-sign {
+            font-size: 1.1rem;
+            color: #ffd699;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 4px 20px;
+            border-radius: 20px;
+            text-shadow: 0 0 10px #000;
+            font-weight: 600;
+            margin-top: 3px;
+            backdrop-filter: blur(5px);
+        }
+
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff9900, 0 0 40px #ff9900; }
+            20%, 24%, 55% { opacity: 0.8; text-shadow: none; }
+        }
+
+        /* 2. ZONA MEDIA: PREGUNTA Y CAÑA */
+        .middle-section {
+            flex: 1 1 auto; 
+            display: flex;
+            flex-direction: row;
+            align-items: center; 
+            justify-content: center;
+            padding: 0 5%;
+            gap: 5%;
+            position: relative;
+        }
+
+        .question-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .question-board {
+            background: rgba(26, 15, 10, 0.95);
+            border: 2px solid #ff9900;
+            border-radius: 15px;
+            padding: 25px 35px;
+            width: 100%;
+            max-width: 650px;
+            text-align: center;
+            font-size: 1.4rem;
+            line-height: 1.4;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+            border-bottom: 5px solid #ff9900;
+            backdrop-filter: blur(8px);
+            transition: opacity 1s ease;
+        }
+
+        .glass-wrapper {
+            flex: 0 0 160px;
+            height: 100%;
+            display: flex;
+            align-items: flex-end; 
+            justify-content: center;
+        }
+
+        /* LA CAÑA */
+        .glass-container {
+            width: 140px;
+            height: 260px; 
+            position: relative;
+            bottom: -5px; 
+            transition: all 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 15;
+        }
+
+        .glass-container.serve {
+            position: fixed;
+            top: 45%;
+            left: 50%;
+            bottom: auto;
+            transform: translate(-50%, -50%) scale(1.6);
+            z-index: 200;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,1));
+        }
+
+        .glass {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.02) 70%, rgba(255,255,255,0.1) 100%);
+            border: 5px solid rgba(255, 255, 255, 0.4);
+            border-top: none;
+            border-radius: 5px 5px 30px 30px;
+            position: relative;
+            box-shadow: inset -10px 0 20px rgba(255,255,255,0.1), 10px 15px 30px rgba(0,0,0,0.8);
+            overflow: hidden; 
+        }
+
+        .glass::before {
+            content: '';
+            position: absolute;
+            top: 5px; left: 15px; width: 20px; height: 95%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
+            border-radius: 10px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .beer-liquid {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            height: 0%; 
+            background: linear-gradient(to right, #c16e00 0%, #ffb300 20%, #ffd700 50%, #ffb300 80%, #a65e00 100%);
+            transition: height 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 1;
+        }
+
+        .bubbles {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(circle, rgba(255,255,255,0.7) 2.5px, transparent 2.5px),
+                radial-gradient(circle, rgba(255,255,255,0.4) 1.5px, transparent 1.5px);
+            background-size: 25px 50px, 18px 35px;
+            background-position: 0 0, 12px 15px;
+            animation: bubbleRise 1.5s linear infinite;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        @keyframes bubbleRise {
+            100% { background-position: 0 -50px, 12px -35px; }
+        }
+
+        .foam {
+            position: absolute;
+            bottom: 0%;
+            left: -10%;
+            width: 120%;
+            height: 40px;
+            background: #fff;
+            border-radius: 10px 10px 0 0;
+            transition: bottom 1s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.5s;
+            opacity: 0;
+            z-index: 2;
+            transform: translateY(20px); 
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+        }
+
+        .foam::before, .foam::after {
+            content: '';
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+        }
+        .foam::before { width: 70px; height: 70px; top: -30px; left: 15px; }
+        .foam::after { width: 80px; height: 80px; top: -35px; right: 20px; }
+
+        /* 3. ZONA INFERIOR: LA BARRA Y LAS OPCIONES */
+        .bottom-section {
+            flex: 0 0 22vh; 
+            background: rgba(36, 18, 9, 0.95); 
+            backdrop-filter: blur(15px);
+            border-top: 5px solid #ff9900;
+            box-shadow: 0 -10px 50px rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            gap: 3vw; 
+            padding: 0 40px;
+            padding-bottom: 20px; 
+            z-index: 20;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .coaster {
+            flex: 1; 
+            max-width: 400px;
+            min-height: 120px; 
+            background: #d4c3a3;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.1"/></svg>');
+            border-radius: 20px;
+            border: 2px solid #bda881;
+            box-shadow: 5px 10px 20px rgba(0,0,0,0.7), inset 0 0 20px rgba(0,0,0,0.1);
+            color: #2b1706;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            font-size: 1.15rem; 
+            line-height: 1.4;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
+            position: relative;
+        }
+
+        .coaster::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 2px dashed #a8936b;
+            border-radius: 12px;
+            pointer-events: none;
+        }
+
+        .coaster:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 10px 20px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.1);
+            background-color: #e0d0b4;
+        }
+
+        .coaster.correct { background-color: #a8d5ba; color: #1a4d2e; border-color: #62a37c; }
+        .coaster.incorrect { background-color: #e6a8a8; color: #661414; border-color: #b35959; }
+
+        /* --- ESTADO DEL JUEGO (HUD) --- */
+        .hud {
+            position: absolute;
+            top: 10px; right: 20px; 
+            text-align: right;
+            z-index: 50;
+            background: rgba(0,0,0,0.8);
+            padding: 8px 18px;
+            border-radius: 10px;
+            border: 1px solid #ff9900;
+            backdrop-filter: blur(5px);
+            transition: opacity 1s ease;
+        }
+        .strikes { font-size: 2.2rem; color: #ff4444; letter-spacing: 5px; text-shadow: 0 0 15px #ff0000; margin-top: -5px; }
+        
+        /* --- BOTONES DE ACCIÓN --- */
+        .action-container {
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 250;
+            display: none;
+            text-align: center;
+        }
+
+        button {
+            padding: 15px 40px; font-size: 1.5rem; font-family: 'Signika', sans-serif;
+            background: #ff9900; color: #1a0f0a; border: none; border-radius: 10px;
+            cursor: pointer; font-weight: bold; transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            text-transform: uppercase;
+        }
+        button:hover { background: #ffb300; transform: scale(1.05); box-shadow: 0 0 25px #ff9900; }
+        
+        /* --- PANTALLAS SUPERPUESTAS --- */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.9);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            z-index: 999; text-align: center; padding: 20px;
+            backdrop-filter: blur(15px);
+        }
+        
+        .overlay h1 { font-family: 'Pacifico', cursive; font-size: 4rem; color: #ff9900; margin-bottom: 10px; text-shadow: 0 0 20px #ff9900; }
+        .overlay h2 { font-size: 1.7rem; color: #ffd699; margin-bottom: 25px; font-weight: 400;}
+        .overlay p { font-size: 1.3rem; max-width: 800px; line-height: 1.6; margin-bottom: 40px; }
+        
+        .hidden { display: none !important; }
+
+        /* ========================================================
+           DISEÑO RESPONSIVO PARA MÓVILES Y TABLETS
+           ======================================================== */
+        @media (max-width: 768px) {
+            .neon-sign {
+                font-size: 2.2rem;
+            }
+            .subtitle-sign {
+                font-size: 0.95rem;
+                padding: 4px 15px;
+                white-space: normal; /* Permite que el subtítulo ocupe 2 líneas si hace falta */
+                text-align: center;
+            }
+
+            .middle-section {
+                flex-direction: column; /* Apila pregunta arriba, cerveza abajo */
+                gap: 10px;
+                padding: 10px 5%;
+            }
+
+            .question-wrapper {
+                justify-content: center;
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            .question-board {
+                font-size: 1.1rem;
+                padding: 15px;
+                margin-top: 10px;
+            }
+
+            .glass-wrapper {
+                flex: 0 0 130px; /* Le da menos altura a la zona de la cerveza */
+                align-items: center;
+            }
+
+            .glass-container {
+                transform: scale(0.6); /* Hace la cerveza más pequeña para que encaje */
+                transform-origin: center bottom;
+                bottom: 0px;
+            }
+
+            .glass-container.serve {
+                transform: translate(-50%, -50%) scale(1); /* No se hace gigante en móvil */
+            }
+
+            /* La zona inferior en móvil se vuelve deslizable (scroll) */
+            .bottom-section {
+                flex: 0 0 45vh; /* Ocupa casi la mitad de la pantalla */
+                flex-direction: column; /* Opciones apiladas */
+                justify-content: flex-start;
+                align-items: stretch;
+                padding: 15px;
+                gap: 15px;
+                overflow-y: auto; /* Permite scroll vertical */
+                border-top: 3px solid #ff9900;
+            }
+
+            .coaster {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 100%;
+                min-height: auto;
+                padding: 15px;
+                font-size: 1.05rem;
+            }
+
+            .hud {
+                top: 5px;
+                right: 5px;
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+            .strikes { font-size: 1.5rem; }
+
+            .overlay h1 { font-size: 2.5rem; }
+            .overlay h2 { font-size: 1.2rem; }
+            .overlay p { font-size: 1.1rem; padding: 0 10px; }
+            button { font-size: 1.1rem; padding: 12px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="https://actions.google.com/sounds/v1/crowds/restaurant_ambient.ogg" type="audio/ogg">
+    </audio>
+
+    <div class="hud" id="hud">
+        <div id="progress">Pregunta: 1 / 8</div>
+        <div class="strikes" id="strikes"></div>
+    </div>
+
+    <div class="layout-wrapper" id="main-layout">
+        
+        <header class="top-section">
+            <div class="neon-sign">La caña del saber</div>
+            <div class="subtitle-sign">Reto: Valorización de Residuos S.A. Damm</div>
+        </header>
+
+        <main class="middle-section">
+            <div class="question-wrapper">
+                <div class="question-board" id="question-text">
+                    Cargando el reto cervecero...
+                </div>
+            </div>
+            
+            <div class="glass-wrapper">
+                <div class="glass-container" id="glass-container">
+                    <div class="glass">
+                        <div class="beer-liquid" id="beer">
+                            <div class="bubbles" id="bubbles"></div>
+                        </div>
+                        <div class="foam" id="foam"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bottom-section" id="coasters-container">
+            <div class="coaster" id="coaster-0" onclick="checkAnswer(0)">Opcion 1</div>
+            <div class="coaster" id="coaster-1" onclick="checkAnswer(1)">Opcion 2</div>
+            <div class="coaster" id="coaster-2" onclick="checkAnswer(2)">Opcion 3</div>
+        </footer>
+
+    </div>
+
+    <div class="action-container" id="action-container">
+        <button id="btn-drink" onclick="drinkBeer()">¡BEBER CAÑA!</button>
+        <button id="btn-restart" class="hidden" onclick="location.reload()">PEDIR OTRA RONDA</button>
+    </div>
+
+    <div class="overlay" id="start-screen">
+        <h1>La caña del saber</h1>
+        <h2>Reto: Valorización del Bagazo y Levadura Residual</h2>
+        <p>¡Bienvenido a nuestro bar de economía circular! Demuestra a Pepe lo que sabes sobre la gestión de residuos en S.A. Damm y te invitará a una caña gratis. Tienes 3 oportunidades.</p>
+        <button onclick="startGame()">¡A JUGAR!</button>
+    </div>
+
+    <div class="overlay hidden" id="end-screen">
+        <h1 id="end-title"></h1>
+        <p id="end-desc"></p>
+        <button id="btn-end-action"></button>
+    </div>
+
+    <script>
+        const triviaData = [
+            {
+                q: "¿A qué ODS ayuda la buena gestión de restos cerveceros como el bagazo y la levadura?",
+                c: "Al ODS 12 (producción responsable) y al ODS 7 (energia limpia).",
+                f1: "Al ODS 14 (vida submarina) y ODS 4 (educación).",
+                f2: "Exclusivamente al ODS 16 (paz e instituciones fuertes)."
+            },
+            {
+                q: "En el manejo convencional, ¿qué etapa consume más energia al tratar el bagazo excedente?",
+                c: "El secado térmico en tambor para reducir su humedad al 8-12 %.",
+                f1: "La congelación a -40 °C para evitar su putrefacción.",
+                f2: "La filtración por ósmosis inversa de sus lixiviados."
+            },
+            {
+                q: "¿Qué problema principal causa dejar pudrir el residuo húmedo al aire libre?",
+                c: "Fuertes molestias por olores a los vecinos y proliferación de moscas y roedores.",
+                f1: "Riesgo extremo de incendios forestales por combustión espontánea.",
+                f2: "Generación de lluvia ácida sobre el núcleo urbano más cercano."
+            },
+            {
+                q: "Si la planta incumple su Autorización Ambiental Integrada, ¿a qué se enfrenta?",
+                c: "A sanciones de hasta 1,75 millones de euros por infracciones muy graves.",
+                f1: "A un simple apercibimiento sin repercusión económica.",
+                f2: "A pagar el triple por el consumo de agua del siguiente mes."
+            },
+            {
+                q: "¿Cuál es el enfoque más sensato para la fábrica de S.A. Damm en El Prat?",
+                c: "Esquema mixto: dar residuo fresco al ganado local, hacer biogás y extraer proteínas útiles.",
+                f1: "Quemar el 100 % del residuo y usar las cenizas para hacer asfalto.",
+                f2: "Enviar todo el bagazo en barco a granjas situadas en otros continentes."
+            },
+            {
+                q: "El residuo retenido (BSG) concentra un gran porcentaje de los subproductos sólidos de la fábrica. ¿Cuánto?",
+                c: "Representa el 85 % aproximado de los subproductos sólidos.",
+                f1: "Apenas el 15 % del total de residuos.",
+                f2: "Exactamente el 50 %, la otra mitad es lúpulo."
+            },
+            {
+                q: "¿Qué uso industrial avanzado se le puede dar a la fibra obtenida del bagazo?",
+                c: "Reforzar bioplásticos basados en PLA y almidón.",
+                f1: "Fabricar filamentos metálicos para maquinaria pesada.",
+                f2: "Crear filtros de aire sintéticos para la industria aeronáutica."
+            },
+            {
+                q: "¿Qué se puede obtener de la digestión anaerobia avanzada del bagazo para la propia fábrica?",
+                c: "Biometano, que puede cubrir parte de la demanda de electricidad y calor de la planta.",
+                f1: "Etanol puro al 99 % para mezclar con gasolina comercial.",
+                f2: "Agua destilada de alta pureza para enfriar reactores nucleares."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let errors = 0;
+        let isLocked = false;
+        let correctIndex = -1;
+
+        const maxQuestions = triviaData.length;
+        const fillPerCorrect = 100 / maxQuestions; 
+
+        let audioCtx;
+
+        function initAudio() {
+            if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            
+            const bgMusic = document.getElementById('bg-music');
+            bgMusic.volume = 0.15; 
+            bgMusic.play().catch(e => console.log("Auto-play prevenido."));
+        }
+
+        function playSound(type) {
+            if(!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if(type === 'glass') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(1500, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.5);
+                gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.5);
+            } else if (type === 'buzz') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(100, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'gulp') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.3);
+                gain.gain.setValueAtTime(0.6, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+                
+                setTimeout(() => {
+                    const osc2 = audioCtx.createOscillator();
+                    const gain2 = audioCtx.createGain();
+                    osc2.connect(gain2); gain2.connect(audioCtx.destination);
+                    osc2.type = 'triangle';
+                    osc2.frequency.setValueAtTime(300, audioCtx.currentTime);
+                    osc2.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.3);
+                    gain2.gain.setValueAtTime(0.6, audioCtx.currentTime);
+                    gain2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                    osc2.start(); osc2.stop(audioCtx.currentTime + 0.4);
+                }, 500);
+            }
+        }
+
+        function startGame() {
+            initAudio();
+            document.getElementById('start-screen').classList.add('hidden');
+            score = 0;
+            errors = 0;
+            currentQuestion = 0;
+            updateBeer(); 
+            updateHud();
+            loadQuestion();
+        }
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function loadQuestion() {
+            if(currentQuestion >= maxQuestions) {
+                endGame();
+                return;
+            }
+
+            isLocked = false;
+            updateHud();
+            
+            const qData = triviaData[currentQuestion];
+            document.getElementById('question-text').innerHTML = qData.q;
+
+            let options = [
+                { text: qData.c, correct: true },
+                { text: qData.f1, correct: false },
+                { text: qData.f2, correct: false }
+            ];
+            
+            shuffle(options);
+
+            for(let i=0; i<3; i++) {
+                const coaster = document.getElementById(`coaster-${i}`);
+                coaster.innerText = options[i].text;
+                coaster.className = 'coaster'; 
+                if(options[i].correct) correctIndex = i;
+            }
+        }
+
+        function updateHud() {
+            document.getElementById('progress').innerText = `Pregunta: ${currentQuestion + 1} / ${maxQuestions}`;
+            document.getElementById('strikes').innerText = 'X'.repeat(errors);
+        }
+
+        function updateBeer() {
+            const beerEl = document.getElementById('beer');
+            const foamEl = document.getElementById('foam');
+            const bubblesEl = document.getElementById('bubbles');
+            
+            let liquidHeight = score * fillPerCorrect;
+            
+            beerEl.style.height = `${liquidHeight}%`;
+            
+            if(score > 0) {
+                foamEl.style.opacity = '1';
+                bubblesEl.style.opacity = '1';
+                foamEl.style.bottom = `${liquidHeight}%`; 
+            } else {
+                foamEl.style.opacity = '0';
+                bubblesEl.style.opacity = '0';
+                foamEl.style.bottom = '0%';
+            }
+        }
+
+        function checkAnswer(selectedIndex) {
+            if(isLocked) return;
+            isLocked = true;
+
+            const selectedCoaster = document.getElementById(`coaster-${selectedIndex}`);
+
+            if(selectedIndex === correctIndex) {
+                playSound('glass');
+                selectedCoaster.classList.add('correct');
+                score++;
+                updateBeer(); 
+                setTimeout(() => {
+                    currentQuestion++;
+                    loadQuestion();
+                }, 1500);
+            } else {
+                playSound('buzz');
+                selectedCoaster.classList.add('incorrect');
+                document.getElementById(`coaster-${correctIndex}`).classList.add('correct'); 
+                errors++;
+                updateHud();
+
+                if(errors >= 3) {
+                    setTimeout(() => endGame(), 1500);
+                } else {
+                    setTimeout(() => {
+                        currentQuestion++;
+                        loadQuestion();
+                    }, 2000);
+                }
+            }
+        }
+
+        function endGame() {
+            const endScreen = document.getElementById('end-screen');
+            const titleEl = document.getElementById('end-title');
+            const descEl = document.getElementById('end-desc');
+            const btnEl = document.getElementById('btn-end-action');
+            
+            endScreen.classList.remove('hidden');
+            
+            const bgMusic = document.getElementById('bg-music');
+            if(bgMusic) bgMusic.volume = 0.05;
+
+            // Condicionantes verbatim
+            if (score <= 4) {
+                titleEl.innerText = "¡Agua va!";
+                titleEl.style.color = "#88ccff"; 
+                descEl.innerText = '"Con esas respuestas, el camarero te pone agua del grifo. Vuelve cuando hayas repasado los apuntes, buen hombre."';
+                btnEl.innerText = "VOLVER A ESTUDIAR (REINICIAR)";
+                btnEl.onclick = () => location.reload();
+            } 
+            else if (score >= 5 && score <= 6) {
+                titleEl.innerText = "Ni fú ni fá";
+                titleEl.style.color = "#ffd699"; 
+                descEl.innerText = '"Ni fria ni del tiempo: tu caña se ha quedado a medias, como tus respuestas. Algo es algo, pero aqui no se sirve medio conocimiento."';
+                btnEl.innerText = "INTENTAR DE NUEVO";
+                btnEl.onclick = () => location.reload();
+            } 
+            else if (score === 7) {
+                titleEl.innerText = "¡Casi, casi!";
+                titleEl.style.color = "#ffb300"; 
+                descEl.innerText = '"Se te ha derramado la ultima gota por el camino... Tan cerca del trago perfecto y te ha faltado un suspiro. La proxima ronda es la tuya."';
+                btnEl.innerText = "OTRA OPORTUNIDAD";
+                btnEl.onclick = () => location.reload();
+            } 
+            else if (score === 8) {
+                titleEl.innerText = "¡VICTORIA ABSOLUTA!";
+                titleEl.style.color = "#a8d5ba"; 
+                descEl.innerText = '"Caña llena, mente serena. Salud, maestro cervecero, que te la has ganado a pulso. Aqui no sobra ni la espuma."';
+                btnEl.innerText = "¡BEBER CAÑA!";
+                btnEl.onclick = serveBeer;
+            }
+        }
+
+        function serveBeer() {
+            document.getElementById('end-screen').classList.add('hidden');
+            document.getElementById('hud').style.opacity = '0';
+            document.getElementById('question-text').style.opacity = '0';
+            
+            const coasters = document.getElementById('coasters-container');
+            coasters.style.transform = 'translateY(100%)';
+            coasters.style.opacity = '0';
+            
+            // Oscurecemos el layout principal para que la caña resalte
+            document.getElementById('main-layout').style.background = 'rgba(0,0,0,0.7)';
+
+            const glassContainer = document.getElementById('glass-container');
+            glassContainer.classList.add('serve');
+
+            setTimeout(() => {
+                document.getElementById('action-container').style.display = 'block';
+            }, 1000);
+        }
+
+        function drinkBeer() {
+            document.getElementById('btn-drink').classList.add('hidden');
+            playSound('gulp');
+            
+            const beer = document.getElementById('beer');
+            beer.style.transition = 'height 3s linear';
+            beer.style.height = '0%';
+            
+            const foam = document.getElementById('foam');
+            foam.style.transition = 'bottom 3s linear, opacity 1s ease-in 2s';
+            foam.style.bottom = '0%';
+            foam.style.opacity = '0';
+
+            const bubbles = document.getElementById('bubbles');
+            bubbles.style.opacity = '0';
+
+            setTimeout(() => {
+                const btnRestart = document.getElementById('btn-restart');
+                btnRestart.classList.remove('hidden');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
